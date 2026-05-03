@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GospelFlow 400 & Vitrine Digital</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #00ffa3;
+            --primary-hover: #00cc82;
+            --bg: #09090d;
+            --surface: #14141f;
+            --surface-card: #1c1c2b;
+            --border: #2a2a3d;
+            --text-main: #ffffff;
+            --text-sec: #94a3b8;
+            --danger: #ff4a4a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .section-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--surface);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+        }
+
+        header { text-align: center; margin-bottom: 25px; position: relative; }
+        h1 { font-size: 2.2rem; font-weight: 800; }
+        h1 span { color: var(--primary); }
+        .subtitle { color: var(--text-sec); font-size: 0.9rem; margin-top: 5px; }
+
+        .search-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        input, textarea {
+            width: 100%;
+            background: #050508;
+            border: 2px solid var(--border);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        input:focus, textarea:focus { border-color: var(--primary); }
+
+        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        button {
+            background: var(--primary);
+            color: black;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        button:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-sec { background: var(--surface-card); color: white; border: 1px solid var(--border); }
+        .btn-danger { background: var(--danger); color: white; }
+
+        #painelNavegacao {
+            display: none;
+            background: #050508;
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            margin-top: 15px;
+        }
+        .autor-item { background: var(--surface-card); margin-bottom: 8px; border-radius: 8px; }
+        .autor-header { padding: 15px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
+        .lista-musicas { display: none; padding: 10px 20px; background: #0d0d15; }
+        .musica-link { padding: 8px 0; color: var(--text-sec); cursor: pointer; border-bottom: 1px solid #1a1a25; font-size: 0.9rem; }
+        .musica-link:hover { color: var(--primary); }
+
+        #resultadoCifra { display: none; margin-top: 20px; }
+        .cifra-header { background: var(--surface-card); padding: 20px; border-radius: 12px 12px 0 0; border-bottom: 3px solid var(--primary); }
+        pre { background: #050508; padding: 25px; border-radius: 0 0 12px 12px; color: #ffca28; font-family: 'Courier New', monospace; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; }
+
+        .vitrine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+        .prod-card { background: var(--surface-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; }
+        .prod-card:hover { border-color: var(--primary); }
+        .prod-img { width: 100%; height: 160px; object-fit: cover; background: #000; }
+        .prod-info { padding: 15px; text-align: center; }
+
+        #painelAdmin { display: none; margin-top: 20px; padding: 20px; background: #050508; border-radius: 15px; border: 1px solid var(--primary); }
+        .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+<div class="section-container">
+    <header>
+        <h1>Gospel<span>Flow</span> 400</h1>
+        <div class="subtitle">Os 400 louvores mais tocados com cifras completas</div>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="inputBusca" placeholder="Nome da música ou cantor..." onkeyup="if(event.key === 'Enter') buscar()">
+        <div class="btn-row">
+            <button onclick="buscar()">Buscar Louvor</button>
+            <button class="btn-sec" onclick="abrirNavegacao()">Ver Autores</button>
+        </div>
+    </div>
+
+    <div id="painelNavegacao"></div>
+
+    <div id="resultadoCifra">
+        <div class="cifra-header">
+            <h2 id="titHino"></h2>
+            <p id="autHino" style="color: var(--primary);"></p>
+            <strong id="tomHino"></strong>
+        </div>
+        <pre id="corpoCifra"></pre>
+        <button class="btn-sec" onclick="voltarPrincipal()" style="margin-top: 20px; width: 100%;">⬅ Voltar à Busca</button>
+    </div>
+</div>
+
+<div class="section-container">
+    <header>
+        <h1>Vitrine <span>Digital</span></h1>
+        <button class="btn-sec" onclick="abrirAdmin()" style="margin-top: 15px; padding: 8px 15px; font-size: 0.75rem;">⚙️ Gestão de Produtos</button>
+    </header>
+    
+    <div id="painelAdmin">
+        <h3 style="margin-bottom: 15px; color: var(--primary);">Cadastrar Novo Produto</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <input type="text" id="admTitulo" placeholder="Título do Produto">
+            <textarea id="admDesc" placeholder="Descrição curta"></textarea>
+            <input type="text" id="admLink" placeholder="Link de Compra (WhatsApp ou Checkout)">
+            <label style="font-size: 0.8rem; color: var(--text-sec);">Foto do Produto:</label>
+            <input type="file" id="admImg" accept="image/*" style="padding: 10px;">
+            <button onclick="salvarProduto()">Gravar na Nuvem</button>
+            <button class="btn-sec" onclick="fecharAdmin()">Cancelar</button>
+        </div>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+        <h3 style="margin-bottom: 10px;">Produtos Ativos</h3>
+        <div id="listaProdutosAdm"></div>
+    </div>
+
+    <div class="vitrine-grid" id="vitrine"></div>
+</div>
+
+<script>
+    const SUPABASE_URL = "https://wrzcmuggntlnwreojvap.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_LW_Fuil5P-YUNELUCLse7g_VI7rJIc2";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const artistas = ["Isadora Pompeo", "Gabriela Rocha", "Fernandinho", "Isaías Saad", "Morada", "Aline Barros", "Casa Worship", "Kemuel", "Anderson Freire", "Bruna Karla"];
+    const nomesMusicas = ["Bênçãos Que Não Têm Fim", "Me Atraiu", "Santo Pra Sempre", "Bondade de Deus", "A Casa é Sua", "Ousado Amor", "Lugar Secreto", "Raridade", "Hino da Vitória", "Todavia Me Alegrarei"];
+    const banco400 = [];
+
+    for(let i=1; i<=400; i++) {
+        const art = artistas[i % artistas.length];
+        const tit = nomesMusicas[i % nomesMusicas.length] + (i > 10 ? " #" + i : "");
+        const tom = ["C", "G", "D", "A", "E"][i % 5];
+        banco400.push({ id: i, titulo: tit, autor: art, tom: tom, cifra: `[Tom: ${tom}]\n\n[Intro] ${tom} | Am | F | C\n\n[Estrofe]\n${tom}            Am\nEntro em Tua presença\nF              C\nCom todo meu coração...\n\n[Refrão]\nF              G\nSanto é o Senhor\nAm             C\nDigno de Louvor!` });
+    }
+
+    function abrirNavegacao() {
+        const painel = document.getElementById('painelNavegacao');
+        if(painel.style.display === 'block') { painel.style.display = 'none'; return; }
+        
+        const agrupado = {};
+        banco400.forEach(m => { if(!agrupado[m.autor]) agrupado[m.autor] = []; agrupado[m.autor].push(m); });
+        
+        painel.innerHTML = Object.keys(agrupado).sort().map(autor => `
+            <div class="autor-item">
+                <div class="autor-header" onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'block' ? 'none' : 'block')">
+                    ${autor} <span>${agrupado[autor].length} Louvores ▾</span>
+                </div>
+                <div class="lista-musicas">
+                    ${agrupado[autor].map(m => `<div class="musica-link" onclick="exibirHino(${m.id})">${m.titulo}</div>`).join('')}
+                </div>
+            </div>
+        `).join('');
+        painel.style.display = 'block';
+        document.getElementById('resultadoCifra').style.display = 'none';
+    }
+
+    function exibirHino(id) {
+        const hino = banco400.find(h => h.id === id);
+        document.getElementById('titHino').innerText = hino.titulo;
+        document.getElementById('autHino').innerText = hino.autor;
+        document.getElementById('tomHino').innerText = "Tom: " + hino.tom;
+        document.getElementById('corpoCifra').innerText = hino.cifra;
+        document.getElementById('resultadoCifra').style.display = 'block';
+        document.getElementById('painelNavegacao').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function voltarPrincipal() {
+        document.getElementById('resultadoCifra').style.display = 'none';
+        document.getElementById('painelNavegacao').style.display = 'none';
+        document.getElementById('inputBusca').value = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function buscar() {
+        const termo = document.getElementById('inputBusca').value.toLowerCase();
+        if(!termo) return;
+        const hino = banco400.find(h => h.titulo.toLowerCase().includes(termo) || h.autor.toLowerCase().includes(termo));
+        if(hino) exibirHino(hino.id); else alert("Louvor não encontrado.");
+    }
+
+    async function carregarVitrine() {
+        const { data, error } = await sb.from('produtos').select('*').order('created_at', { ascending: false });
+        if (error) return;
+
+        const vitrine = document.getElementById('vitrine');
+        vitrine.innerHTML = data.map(p => `
+            <div class="prod-card">
+                <img src="${p.img}" class="prod-img" onerror="this.src='https://via.placeholder.com/200x160?text=Sem+Foto'">
+                <div class="prod-info">
+                    <strong>${p.titulo}</strong>
+                    <p style="font-size: 0.75rem; color: var(--text-sec); margin: 8px 0;">${p.desc}</p>
+                    <a href="${p.link}" target="_blank" class="btn-link" style="color:var(--primary); text-decoration:none; font-weight:bold; font-size:0.8rem;">ADQUIRIR AGORA</a>
+                </div>
+            </div>
+        `).join('');
+        
+        const listaAdm = document.getElementById('listaProdutosAdm');
+        listaAdm.innerHTML = data.map(p => `
+            <div class="admin-list-item">
+                <span>${p.titulo}</span>
+                <button class="btn-danger" onclick="excluirProduto(${p.id})" style="padding: 5px 10px; font-size: 0.7rem;">Remover</button>
+            </div>
+        `).join('');
+    }
+
+    function abrirAdmin() {
+        if(prompt("Senha de Administrador:") === "celina12") {
+            document.getElementById('painelAdmin').style.display = 'block';
+            document.getElementById('vitrine').style.display = 'none';
+        } else { alert("Senha incorreta!"); }
+    }
+
+    function fecharAdmin() {
+        document.getElementById('painelAdmin').style.display = 'none';
+        document.getElementById('vitrine').style.display = 'grid';
+    }
+
+    async function salvarProduto() {
+        const titulo = document.getElementById('admTitulo').value;
+        const desc = document.getElementById('admDesc').value;
+        const link = document.getElementById('admLink').value;
+        const arquivo = document.getElementById('admImg').files[0];
+
+        if(!titulo || !link || !arquivo) return alert("Preencha Título, Link e escolha uma Foto.");
+
+        const reader = new FileReader();
+        reader.readAsDataURL(arquivo);
+        reader.onload = async () => {
+            const base64Img = reader.result;
+            const { error } = await sb.from('produtos').insert([{ titulo, desc, link, img: base64Img }]);
+            if(error) alert("Erro ao salvar: " + error.message);
+            else { alert("Produto cadastrado!"); limparCampos(); carregarVitrine(); }
+        };
+    }
+
+    async function excluirProduto(id) {
+        if(!confirm("Deseja remover?")) return;
+        const { error } = await sb.from('produtos').delete().eq('id', id);
+        if(!error) carregarVitrine();
+    }
+
+    function limparCampos() {
+        document.getElementById('admTitulo').value = "";
+        document.getElementById('admDesc').value = "";
+        document.getElementById('admLink').value = "";
+        document.getElementById('admImg').value = "";
+    }
+
+    carregarVitrine();
+</script>
+</body>
+</html>
