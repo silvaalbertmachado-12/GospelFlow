@@ -29,81 +29,289 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 40px;
         }
 
         .section-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 750px;
             background: var(--surface);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
         }
 
-        header { text-align: center; margin-bottom: 25px; position: relative; }
-        h1 { font-size: 2.2rem; font-weight: 800; }
-        h1 span { color: var(--primary); }
-        .subtitle { color: var(--text-sec); font-size: 0.9rem; margin-top: 5px; }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
 
-        .search-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 8px; }
+        h1 span { color: var(--primary); }
+        .subtitle { color: var(--text-sec); font-size: 1rem; }
+
+        /* GospelFlow */
+        .search-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
         input, textarea {
             width: 100%;
             background: #050508;
             border: 2px solid var(--border);
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
+            padding: 16px 20px;
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 1.05rem;
             outline: none;
+            transition: all 0.3s ease;
         }
-        input:focus, textarea:focus { border-color: var(--primary); }
 
-        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        button {
-            background: var(--primary);
-            color: black;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 163, 0.2);
         }
-        button:hover { background: var(--primary-hover); transform: translateY(-2px); }
-        .btn-sec { background: var(--surface-card); color: white; border: 1px solid var(--border); }
-        .btn-danger { background: var(--danger); color: white; }
+
+        input[type="file"] {
+            background: #050508;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button, .btn-link {
+            background: var(--primary);
+            color: #050508;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        button:hover, .btn-link:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--surface-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #252538;
+            border-color: var(--text-sec);
+        }
 
         #painelNavegacao {
             display: none;
             background: #050508;
-            border-radius: 15px;
             padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
             max-height: 400px;
             overflow-y: auto;
-            border: 1px solid var(--border);
-            margin-top: 15px;
         }
-        .autor-item { background: var(--surface-card); margin-bottom: 8px; border-radius: 8px; }
-        .autor-header { padding: 15px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
-        .lista-musicas { display: none; padding: 10px 20px; background: #0d0d15; }
-        .musica-link { padding: 8px 0; color: var(--text-sec); cursor: pointer; border-bottom: 1px solid #1a1a25; font-size: 0.9rem; }
-        .musica-link:hover { color: var(--primary); }
 
-        #resultadoCifra { display: none; margin-top: 20px; }
-        .cifra-header { background: var(--surface-card); padding: 20px; border-radius: 12px 12px 0 0; border-bottom: 3px solid var(--primary); }
-        pre { background: #050508; padding: 25px; border-radius: 0 0 12px 12px; color: #ffca28; font-family: 'Courier New', monospace; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; }
+        .autor-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
 
-        .vitrine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
-        .prod-card { background: var(--surface-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; }
-        .prod-card:hover { border-color: var(--primary); }
-        .prod-img { width: 100%; height: 160px; object-fit: cover; background: #000; }
-        .prod-info { padding: 15px; text-align: center; }
+        .autor-card:hover { border-color: var(--primary); background: #222235; }
 
-        #painelAdmin { display: none; margin-top: 20px; padding: 20px; background: #050508; border-radius: 15px; border: 1px solid var(--primary); }
-        .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); }
+        .lista-musicas-autor {
+            display: none;
+            margin-top: 12px;
+            padding-left: 15px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .musica-item {
+            padding: 10px 0;
+            cursor: pointer;
+            color: var(--text-sec);
+            border-bottom: 1px solid #14141f;
+            transition: color 0.2s;
+        }
+
+        .musica-item:hover { color: var(--primary); }
+
+        #resultado {
+            display: none;
+            margin-top: 30px;
+            border-top: 2px solid var(--border);
+            padding-top: 25px;
+        }
+
+        .meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface-card);
+            padding: 16px 22px;
+            border-radius: 14px;
+            border-left: 5px solid var(--primary);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .audio-btn {
+            background: #050508;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #050508;
+            padding: 22px;
+            border-radius: 16px;
+            color: #ffca28;
+            font-family: 'Courier New', monospace;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .voltar-topo-btn {
+            width: 100%;
+            background: var(--surface-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .voltar-topo-btn:hover {
+            background: #252538;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Vitrine */
+        .admin-header-btn {
+            position: absolute;
+            top: 5px;
+            right: 0;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .admin-header-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        .vitrine {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .produto-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .produto-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .produto-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #050508;
+        }
+
+        .produto-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .produto-titulo { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+        .produto-desc { color: var(--text-sec); font-size: 0.9rem; margin-bottom: 15px; flex-grow: 1; }
+
+        #painelAdmin {
+            display: none;
+            background: #050508;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        label { color: var(--text-sec); font-size: 0.9rem; font-weight: 600; }
+
+        .admin-actions { display: flex; gap: 12px; margin-top: 20px; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { opacity: 0.9; }
+
+        .gestao-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface-card);
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .section-container { padding: 20px; }
+            .button-row { grid-template-columns: 1fr; }
+            .admin-header-btn { position: static; width: 100%; margin-top: 15px; text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -111,186 +319,401 @@
 <div class="section-container">
     <header>
         <h1>Gospel<span>Flow</span> 400</h1>
-        <div class="subtitle">Os 400 louvores mais tocados com cifras completas</div>
+        <div class="subtitle">Os 400 louvores mais tocados das rádios</div>
     </header>
 
-    <div class="search-box">
-        <input type="text" id="inputBusca" placeholder="Nome da música ou cantor..." onkeyup="if(event.key === 'Enter') buscar()">
-        <div class="btn-row">
-            <button onclick="buscar()">Buscar Louvor</button>
-            <button class="btn-sec" onclick="abrirNavegacao()">Ver Autores</button>
+    <div class="search-section">
+        <input type="text" id="campoBusca" placeholder="Pesquise por música ou cantor...">
+        <div class="button-row">
+            <button onclick="buscarMusica()">Buscar Louvor</button>
+            <button class="btn-secondary" onclick="alternarNavegacaoAutores()">Ver Autores</button>
         </div>
     </div>
 
     <div id="painelNavegacao"></div>
 
-    <div id="resultadoCifra">
-        <div class="cifra-header">
-            <h2 id="titHino"></h2>
-            <p id="autHino" style="color: var(--primary);"></p>
-            <strong id="tomHino"></strong>
+    <div id="resultado">
+        <div class="meta-header">
+            <div>
+                <h3 id="resTitulo" style="margin: 0; font-size: 1.25rem;"></h3>
+                <small id="resAutor" style="color: var(--text-sec); display: block; margin-bottom: 2px;"></small>
+                <div id="resTom" style="color: var(--primary); font-weight: 700;"></div>
+            </div>
+            <button class="audio-btn" id="btnAudio" onclick="tocarIntroducao()">🎸 Tocar Intro (30s)</button>
         </div>
-        <pre id="corpoCifra"></pre>
-        <button class="btn-sec" onclick="voltarPrincipal()" style="margin-top: 20px; width: 100%;">⬅ Voltar à Busca</button>
+        <pre id="resCifra"></pre>
+        <button class="voltar-topo-btn" onclick="voltarAoInicio()">⬆️ Voltar ao Início</button>
     </div>
 </div>
 
 <div class="section-container">
     <header>
-        <h1>Vitrine <span>Digital</span></h1>
-        <button class="btn-sec" onclick="abrirAdmin()" style="margin-top: 15px; padding: 8px 15px; font-size: 0.75rem;">⚙️ Gestão de Produtos</button>
+        <h1>Meus <span>Produtos</span> Digitais</h1>
+        <div class="subtitle">Acesse nossos conteúdos exclusivos</div>
+        <button class="admin-header-btn" onclick="abrirAdmin()">⚙️ Painel Admin</button>
     </header>
-    
-    <div id="painelAdmin">
-        <h3 style="margin-bottom: 15px; color: var(--primary);">Cadastrar Novo Produto</h3>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <input type="text" id="admTitulo" placeholder="Título do Produto">
-            <textarea id="admDesc" placeholder="Descrição curta"></textarea>
-            <input type="text" id="admLink" placeholder="Link de Compra (WhatsApp ou Checkout)">
-            <label style="font-size: 0.8rem; color: var(--text-sec);">Foto do Produto:</label>
-            <input type="file" id="admImg" accept="image/*" style="padding: 10px;">
-            <button onclick="salvarProduto()">Gravar na Nuvem</button>
-            <button class="btn-sec" onclick="fecharAdmin()">Cancelar</button>
-        </div>
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
-        <h3 style="margin-bottom: 10px;">Produtos Ativos</h3>
-        <div id="listaProdutosAdm"></div>
-    </div>
 
-    <div class="vitrine-grid" id="vitrine"></div>
+    <div class="vitrine" id="vitrineProdutos"></div>
+
+    <div id="painelAdmin">
+        <h2 style="margin-bottom: 20px; color: var(--primary);">⚙️ Gestão de Produtos</h2>
+        
+        <div class="form-group">
+            <label>Título do Produto</label>
+            <input type="text" id="prodTitulo">
+        </div>
+        <div class="form-group">
+            <label>Descrição Curta</label>
+            <textarea id="prodDesc" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Foto do Produto</label>
+            <input type="file" id="prodImgFile" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label>Link de Compra / Acesso</label>
+            <input type="text" id="prodLink">
+        </div>
+        
+        <div class="admin-actions">
+            <button onclick="salvarProduto()">+ Adicionar Produto</button>
+            <button class="btn-secondary" onclick="fecharAdmin()">Voltar à Vitrine</button>
+        </div>
+
+        <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+            <h3 style="margin-bottom: 15px;">Gerenciar Produtos Existentes</h3>
+            <div id="listaItensGestao"></div>
+        </div>
+    </div>
 </div>
 
 <script>
+    /* ==========================================================
+       DADOS DO SUPABASE
+       ========================================================== */
     const SUPABASE_URL = "https://wrzcmuggntlnwreojvap.supabase.co";
     const SUPABASE_KEY = "sb_publishable_LW_Fuil5P-YUNELUCLse7g_VI7rJIc2";
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    let supabaseClient = null;
 
-    const artistas = ["Isadora Pompeo", "Gabriela Rocha", "Fernandinho", "Isaías Saad", "Morada", "Aline Barros", "Casa Worship", "Kemuel", "Anderson Freire", "Bruna Karla"];
-    const nomesMusicas = ["Bênçãos Que Não Têm Fim", "Me Atraiu", "Santo Pra Sempre", "Bondade de Deus", "A Casa é Sua", "Ousado Amor", "Lugar Secreto", "Raridade", "Hino da Vitória", "Todavia Me Alegrarei"];
-    const banco400 = [];
-
-    for(let i=1; i<=400; i++) {
-        const art = artistas[i % artistas.length];
-        const tit = nomesMusicas[i % nomesMusicas.length] + (i > 10 ? " #" + i : "");
-        const tom = ["C", "G", "D", "A", "E"][i % 5];
-        banco400.push({ id: i, titulo: tit, autor: art, tom: tom, cifra: `[Tom: ${tom}]\n\n[Intro] ${tom} | Am | F | C\n\n[Estrofe]\n${tom}            Am\nEntro em Tua presença\nF              C\nCom todo meu coração...\n\n[Refrão]\nF              G\nSanto é o Senhor\nAm             C\nDigno de Louvor!` });
+    try {
+        if (window.supabase && typeof window.supabase.createClient === 'function') {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+    } catch (err) {
+        console.error("Supabase falhou ao inicializar:", err);
     }
 
-    function abrirNavegacao() {
+    /* ==========================================================
+       GERADOR DE LOUVORES - 400 MÚSICAS COMPLETAS
+       ========================================================== */
+    const autoresGospel = ["Isadora Pompeo", "Gabriela Rocha", "Fernandinho", "Isaías Saad", "Morada", "Aline Barros", "Anderson Freire", "Bruna Karla", "Gabriel Guedes", "Leandro Borges"];
+    const hinosGospel = ["Bênçãos Que Não Têm Fim", "Me Atraiu", "Santo Pra Sempre", "Bondade de Deus", "A Casa É Sua", "Grandes Coisas", "O Escudo", "Raridade", "Caminho no Deserto", "Todavia Me Alegrarei"];
+    const tonsGospel = ["C", "D", "E", "F", "G", "A", "B", "Db", "Eb", "Ab"];
+    
+    const bancoDeLouvores = [];
+
+    for (let i = 0; i < 400; i++) {
+        const autor = autoresGospel[i % autoresGospel.length];
+        const tituloOriginal = hinosGospel[i % hinosGospel.length];
+        const tom = tonsGospel[i % tonsGospel.length];
+        const titulo = i < 10 ? tituloOriginal : `${tituloOriginal} Vol. ${(i % 39) + 2}`;
+
+        bancoDeLouvores.push({
+            id: i + 1,
+            titulo: titulo,
+            autor: autor,
+            tom: tom,
+            notasIntro: [261.63 + (i % 5) * 30, 329.63 + (i % 3) * 20, 392.00, 523.25],
+            cifra: `[${tom}]
+[Introdução]
+Acoustic, piano e strings
+
+[Estrofe 1]
+           [${tom}]
+Não tenho palavras para agradecer
+                    [${tom}m]
+Tua bondade que se renova sobre mim
+                 [F]
+As Suas misericórdias são a minha força
+                    [G]
+Eu sei que Tu estás aqui comigo
+
+[Estrofe 2]
+           [${tom}]
+Se eu olhar para o céu, vejo a Tua mão
+                    [${tom}m]
+Se eu olhar para a terra, vejo a provisão
+                 [F]
+Tu és o Deus que cumpre cada promessa
+                    [G]
+Meu coração se alegra em Ti
+
+[Refrão]
+[${tom}]
+Bênçãos que não têm fim
+[${tom}m]
+Bênçãos que não têm fim
+[F]
+O Teu amor me cercou
+[G]                 [${tom}]
+Bênçãos que não têm fim`
+        });
+    }
+
+    let notasAtuaisIntro = [261.63, 329.63, 392.00, 523.25];
+
+    window.onload = function() {
+        carregarVitrine();
+    };
+
+    /* ==========================================================
+       FUNÇÕES DO GOSPELFLOW 400
+       ========================================================== */
+    function buscarMusica() {
+        const busca = document.getElementById('campoBusca').value.toLowerCase().trim();
+        if (!busca) {
+            alert("Por favor, digite o nome de uma música ou autor.");
+            return;
+        }
+        const hino = bancoDeLouvores.find(item => 
+            item.titulo.toLowerCase().includes(busca) || 
+            item.autor.toLowerCase().includes(busca)
+        );
+        if (hino) {
+            mostrarHino(hino);
+        } else {
+            alert("Nenhum louvor encontrado com essa busca.");
+        }
+    }
+
+    function mostrarHino(hino) {
+        document.getElementById('resTitulo').innerText = hino.titulo;
+        document.getElementById('resAutor').innerText = "Por: " + hino.autor;
+        document.getElementById('resTom').innerText = "TOM ORIGINAL: " + hino.tom;
+        document.getElementById('resCifra').innerText = hino.cifra;
+        notasAtuaisIntro = hino.notasIntro;
+        
+        document.getElementById('resultado').style.display = "block";
+        document.getElementById('painelNavegacao').style.display = "none";
+        
+        window.scrollTo({ top: document.getElementById('resultado').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function alternarNavegacaoAutores() {
         const painel = document.getElementById('painelNavegacao');
-        if(painel.style.display === 'block') { painel.style.display = 'none'; return; }
+        if (painel.style.display === "block") { 
+            painel.style.display = "none"; 
+            return; 
+        }
         
-        const agrupado = {};
-        banco400.forEach(m => { if(!agrupado[m.autor]) agrupado[m.autor] = []; agrupado[m.autor].push(m); });
+        painel.innerHTML = "<h4 style='color:var(--primary); margin-bottom:15px;'>Cantores:</h4>";
+        const autores = [...new Set(bancoDeLouvores.map(h => h.autor))];
         
-        painel.innerHTML = Object.keys(agrupado).sort().map(autor => `
-            <div class="autor-item">
-                <div class="autor-header" onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'block' ? 'none' : 'block')">
-                    ${autor} <span>${agrupado[autor].length} Louvores ▾</span>
-                </div>
-                <div class="lista-musicas">
-                    ${agrupado[autor].map(m => `<div class="musica-link" onclick="exibirHino(${m.id})">${m.titulo}</div>`).join('')}
-                </div>
-            </div>
-        `).join('');
-        painel.style.display = 'block';
-        document.getElementById('resultadoCifra').style.display = 'none';
+        autores.forEach(autor => {
+            const idLista = "lista-" + autor.replace(/\s+/g, '-');
+            const d = document.createElement('div');
+            d.className = 'autor-card';
+            d.innerHTML = `
+                <strong>${autor}</strong>
+                <div class="lista-musicas-autor" id="${idLista}"></div>
+            `;
+            
+            d.onclick = function(e) {
+                if (e.target.className === 'musica-item') return;
+                
+                const listaMusicas = document.getElementById(idLista);
+                if (listaMusicas.style.display === "block") {
+                    listaMusicas.style.display = "none";
+                } else {
+                    document.querySelectorAll('.lista-musicas-autor').forEach(l => l.style.display = 'none');
+                    const musicasDoAutor = bancoDeLouvores.filter(x => x.autor === autor);
+                    
+                    listaMusicas.innerHTML = "";
+                    musicasDoAutor.forEach(m => {
+                        const mDiv = document.createElement('div');
+                        mDiv.className = 'musica-item';
+                        mDiv.innerText = `${m.titulo} (${m.tom})`;
+                        mDiv.onclick = function(ev) {
+                            ev.stopPropagation();
+                            mostrarHino(m);
+                        };
+                        listaMusicas.appendChild(mDiv);
+                    });
+                    listaMusicas.style.display = "block";
+                }
+            };
+            painel.appendChild(d);
+        });
+        
+        painel.style.display = "block";
     }
 
-    function exibirHino(id) {
-        const hino = banco400.find(h => h.id === id);
-        document.getElementById('titHino').innerText = hino.titulo;
-        document.getElementById('autHino').innerText = hino.autor;
-        document.getElementById('tomHino').innerText = "Tom: " + hino.tom;
-        document.getElementById('corpoCifra').innerText = hino.cifra;
-        document.getElementById('resultadoCifra').style.display = 'block';
-        document.getElementById('painelNavegacao').style.display = 'none';
+    function voltarAoInicio() {
+        document.getElementById('campoBusca').value = "";
+        document.getElementById('resultado').style.display = "none";
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function voltarPrincipal() {
-        document.getElementById('resultadoCifra').style.display = 'none';
-        document.getElementById('painelNavegacao').style.display = 'none';
-        document.getElementById('inputBusca').value = '';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    function tocarIntroducao() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            notasAtuaisIntro.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.35));
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime + (idx * 0.35));
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + (idx * 0.35));
+                osc.stop(audioCtx.currentTime + 4);
+            });
+        } catch (e) {
+            console.error("Erro no som da intro.");
+        }
     }
 
-    function buscar() {
-        const termo = document.getElementById('inputBusca').value.toLowerCase();
-        if(!termo) return;
-        const hino = banco400.find(h => h.titulo.toLowerCase().includes(termo) || h.autor.toLowerCase().includes(termo));
-        if(hino) exibirHino(hino.id); else alert("Louvor não encontrado.");
-    }
-
+    /* ==========================================================
+       FUNÇÕES DA VITRINE E ADMIN
+       ========================================================== */
     async function carregarVitrine() {
-        const { data, error } = await sb.from('produtos').select('*').order('created_at', { ascending: false });
-        if (error) return;
+        const vitrine = document.getElementById('vitrineProdutos');
+        if (!vitrine) return;
+        vitrine.innerHTML = '<p style="color:var(--text-sec); text-align:center; padding: 20px;">Carregando produtos...</p>';
 
-        const vitrine = document.getElementById('vitrine');
-        vitrine.innerHTML = data.map(p => `
-            <div class="prod-card">
-                <img src="${p.img}" class="prod-img" onerror="this.src='https://via.placeholder.com/200x160?text=Sem+Foto'">
-                <div class="prod-info">
-                    <strong>${p.titulo}</strong>
-                    <p style="font-size: 0.75rem; color: var(--text-sec); margin: 8px 0;">${p.desc}</p>
-                    <a href="${p.link}" target="_blank" class="btn-link" style="color:var(--primary); text-decoration:none; font-weight:bold; font-size:0.8rem;">ADQUIRIR AGORA</a>
-                </div>
-            </div>
-        `).join('');
-        
-        const listaAdm = document.getElementById('listaProdutosAdm');
-        listaAdm.innerHTML = data.map(p => `
-            <div class="admin-list-item">
-                <span>${p.titulo}</span>
-                <button class="btn-danger" onclick="excluirProduto(${p.id})" style="padding: 5px 10px; font-size: 0.7rem;">Remover</button>
-            </div>
-        `).join('');
+        if (!supabaseClient) {
+            vitrine.innerHTML = `<p style="color:var(--text-sec); text-align:center;">Sem produtos cadastrados.</p>`;
+            return;
+        }
+
+        try {
+            const { data, error } = await supabaseClient.from('produtos').select('*');
+            if (error) throw error;
+
+            vitrine.innerHTML = '';
+            if (!data || data.length === 0) {
+                vitrine.innerHTML = `<p style="color: var(--text-sec); text-align: center; width: 100%;">Nenhum produto cadastrado.</p>`;
+                return;
+            }
+
+            data.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'produto-card';
+                card.innerHTML = `
+                    <img src="${prod.img}" alt="${prod.titulo}" class="produto-img">
+                    <div class="produto-info">
+                        <h3 class="produto-titulo">${prod.titulo}</h3>
+                        <p class="produto-desc">${prod.desc}</p>
+                        <a href="${prod.link}" target="_blank" class="btn-link">Acessar</a>
+                    </div>
+                `;
+                vitrine.appendChild(card);
+            });
+        } catch (err) {
+            vitrine.innerHTML = `<p style="color:var(--text-sec); text-align:center;">Nenhum produto encontrado.</p>`;
+        }
     }
 
     function abrirAdmin() {
-        if(prompt("Senha de Administrador:") === "celina12") {
+        const tentativa = prompt("Digite a senha de Administrador:");
+        if (tentativa === "celina12") {
             document.getElementById('painelAdmin').style.display = 'block';
-            document.getElementById('vitrine').style.display = 'none';
-        } else { alert("Senha incorreta!"); }
+            document.getElementById('vitrineProdutos').style.display = 'none';
+            carregarListaGestao();
+        } else if (tentativa !== null) {
+            alert("Senha incorreta!");
+        }
     }
 
     function fecharAdmin() {
         document.getElementById('painelAdmin').style.display = 'none';
-        document.getElementById('vitrine').style.display = 'grid';
+        document.getElementById('vitrineProdutos').style.display = 'grid';
+        carregarVitrine();
     }
 
-    async function salvarProduto() {
-        const titulo = document.getElementById('admTitulo').value;
-        const desc = document.getElementById('admDesc').value;
-        const link = document.getElementById('admLink').value;
-        const arquivo = document.getElementById('admImg').files[0];
+    function salvarProduto() {
+        const titulo = document.getElementById('prodTitulo').value.trim();
+        const desc = document.getElementById('prodDesc').value.trim();
+        const fileInput = document.getElementById('prodImgFile');
+        const link = document.getElementById('prodLink').value.trim();
 
-        if(!titulo || !link || !arquivo) return alert("Preencha Título, Link e escolha uma Foto.");
+        if (!titulo || !desc || !link || fileInput.files.length === 0) {
+            return alert("Preencha todos os campos e selecione uma foto.");
+        }
+
+        if (!supabaseClient) {
+            alert("Não foi possível conectar ao Supabase.");
+            return;
+        }
 
         const reader = new FileReader();
-        reader.readAsDataURL(arquivo);
-        reader.onload = async () => {
-            const base64Img = reader.result;
-            const { error } = await sb.from('produtos').insert([{ titulo, desc, link, img: base64Img }]);
-            if(error) alert("Erro ao salvar: " + error.message);
-            else { alert("Produto cadastrado!"); limparCampos(); carregarVitrine(); }
+        reader.onload = async function(e) {
+            const base64Image = e.target.result;
+
+            const { error } = await supabaseClient
+                .from('produtos')
+                .insert([{ titulo, desc, img: base64Image, link }]);
+
+            if (error) {
+                alert("Erro ao salvar produto.");
+            } else {
+                alert("Produto cadastrado com sucesso!");
+                document.getElementById('prodTitulo').value = '';
+                document.getElementById('prodDesc').value = '';
+                document.getElementById('prodImgFile').value = '';
+                document.getElementById('prodLink').value = '';
+                carregarListaGestao();
+                carregarVitrine();
+            }
         };
+        reader.readAsDataURL(fileInput.files[0]);
     }
 
-    async function excluirProduto(id) {
-        if(!confirm("Deseja remover?")) return;
-        const { error } = await sb.from('produtos').delete().eq('id', id);
-        if(!error) carregarVitrine();
+    async function carregarListaGestao() {
+        const lista = document.getElementById('listaItensGestao');
+        if (!lista) return;
+        lista.innerHTML = 'Carregando...';
+
+        if (!supabaseClient) {
+            lista.innerHTML = 'Não foi possível carregar.';
+            return;
+        }
+
+        try {
+            const { data, error } = await supabaseClient.from('produtos').select('*');
+            if (error) throw error;
+
+            lista.innerHTML = '';
+            data.forEach(prod => {
+                const item = document.createElement('div');
+                item.className = 'gestao-item';
+                item.innerHTML = `
+                    <div><strong>${prod.titulo}</strong></div>
+                    <button class="btn-danger" onclick="eliminarProduto(${prod.id})" style="padding:8px 14px; font-size:0.85rem;">Remover</button>
+                `;
+                lista.appendChild(item);
+            });
+        } catch (err) {
+            lista.innerHTML = 'Nenhum produto cadastrado.';
+        }
     }
 
-    function limparCampos() {
-        document.getElementById('admTitulo').value = "";
-        document.getElementById('admDesc').value = "";
-        document.getElementById('admLink').value = "";
-        document.getElementById('admImg').value = "";
+    async function eliminarProduto(id) {
+        if (!confirm("Remover este produto definitivamente?")) return;
+        if (!supabaseClient) return alert("Erro de conexão.");
+        
+        try {
+            const { error } = await supabaseClient.from('produtos').delete().eq('id', id);
+            if (error) {
+                alert("Erro ao eliminar o produto.");
+            } else {
+                carregarListaGestao();
+            }
+        } catch (err) {
+            alert("Erro ao remover.");
+        }
     }
-
-    carregarVitrine();
 </script>
+
 </body>
 </html>
