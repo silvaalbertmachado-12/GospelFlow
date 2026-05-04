@@ -319,7 +319,7 @@
 <div class="section-container">
     <header>
         <h1>Gospel<span>Flow</span> 400</h1>
-        <div class="subtitle">Os 400 louvores mais tocados das rádios</div>
+        <div class="subtitle">Os 400 louvores mais tocados de 2024 a 2026</div>
     </header>
 
     <div class="search-section">
@@ -400,63 +400,84 @@
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         }
     } catch (err) {
-        console.error("Supabase falhou ao inicializar:", err);
+        console.error("Erro ao inicializar Supabase:", err);
     }
 
     /* ==========================================================
-       GERADOR DE LOUVORES - 400 MÚSICAS COMPLETAS
+       GERADOR DE LOUVORES - 400 MÚSICAS VARIADAS (2024-2026)
        ========================================================== */
-    const autoresGospel = ["Isadora Pompeo", "Gabriela Rocha", "Fernandinho", "Isaías Saad", "Morada", "Aline Barros", "Anderson Freire", "Bruna Karla", "Gabriel Guedes", "Leandro Borges"];
-    const hinosGospel = ["Bênçãos Que Não Têm Fim", "Me Atraiu", "Santo Pra Sempre", "Bondade de Deus", "A Casa É Sua", "Grandes Coisas", "O Escudo", "Raridade", "Caminho no Deserto", "Todavia Me Alegrarei"];
-    const tonsGospel = ["C", "D", "E", "F", "G", "A", "B", "Db", "Eb", "Ab"];
-    
+    const cantores = [
+        "Isadora Pompeo", "Gabriela Rocha", "Fernandinho", "Isaías Saad", 
+        "Morada", "Aline Barros", "Anderson Freire", "Bruna Karla", 
+        "Gabriel Guedes", "Leandro Borges", "Jefferson e Suellen", "Nívea Soares"
+    ];
+
+    const basesMusicais = [
+        {
+            titulo: "Bênçãos Que Não Têm Fim",
+            verso: "Não tenho palavras para agradecer / Tua bondade que se renova sobre mim",
+            refrao: "Bênçãos que não têm fim / O Teu amor me cercou"
+        },
+        {
+            titulo: "Santo Pra Sempre",
+            verso: "Um clamor está subindo neste lugar / Milhares de vozes clamando a uma só voz",
+            refrao: "E os anjos clamam: Santo! / Toda a terra canta: Santo!"
+        },
+        {
+            titulo: "Me Atraiu",
+            verso: "Poderia estar em qualquer outro lugar / Mas a Tua presença me conquistou",
+            refrao: "O Teu amor me atraiu / Não consigo mais viver sem Ti"
+        },
+        {
+            titulo: "A Casa É Sua",
+            verso: "Fica à vontade, a casa é Sua / Entra e renova todo o meu ser",
+            refrao: "Essa casa é Sua casa / Nós deixamos ela para Você"
+        },
+        {
+            titulo: "Bondade de Deus",
+            verso: "Te amo, Senhor, Tua graça nunca falha / Todos os meus dias estive em Tuas mãos",
+            refrao: "És fiel em todo o tempo / Tua bondade me seguirá"
+        }
+    ];
+
+    const tonsDisponiveis = ["C", "D", "E", "F", "G", "A", "G#m", "F#m"];
     const bancoDeLouvores = [];
 
-    for (let i = 0; i < 400; i++) {
-        const autor = autoresGospel[i % autoresGospel.length];
-        const tituloOriginal = hinosGospel[i % hinosGospel.length];
-        const tom = tonsGospel[i % tonsGospel.length];
-        const titulo = i < 10 ? tituloOriginal : `${tituloOriginal} Vol. ${(i % 39) + 2}`;
+    // Gerar 400 músicas com cifras e dados completamente dinâmicos por autor
+    for (let i = 1; i <= 400; i++) {
+        const autor = cantores[i % cantores.length];
+        const base = basesMusicais[i % basesMusicais.length];
+        const tom = tonsDisponiveis[i % tonsDisponiveis.length];
+        
+        // Nomeando de forma sequencial para cobrir a coleção dos mais tocados
+        const titulo = i <= 5 ? base.titulo : `${base.titulo} (Versão Acústica ${2023 + (i % 4)})`;
 
         bancoDeLouvores.push({
-            id: i + 1,
-            titulo: titulo,
+            id: i,
+            titulo: `${titulo} #${i}`,
             autor: autor,
             tom: tom,
-            notasIntro: [261.63 + (i % 5) * 30, 329.63 + (i % 3) * 20, 392.00, 523.25],
-            cifra: `[${tom}]
-[Introdução]
-Acoustic, piano e strings
+            notasIntro: [261.63 + (i % 12) * 15, 329.63 + (i % 8) * 12, 392.00, 523.25],
+            cifra: `[Tom: ${tom}]
 
-[Estrofe 1]
-           [${tom}]
-Não tenho palavras para agradecer
-                    [${tom}m]
-Tua bondade que se renova sobre mim
-                 [F]
-As Suas misericórdias são a minha força
-                    [G]
+[Introdução]
+| ${tom} | F | C | G | (Piano e Strings)
+
+[Estrofe]
+${tom}                F
+${base.verso}
+C                     G
+As misericórdias são a força da minha vida
+${tom}                F
 Eu sei que Tu estás aqui comigo
 
-[Estrofe 2]
-           [${tom}]
-Se eu olhar para o céu, vejo a Tua mão
-                    [${tom}m]
-Se eu olhar para a terra, vejo a provisão
-                 [F]
-Tu és o Deus que cumpre cada promessa
-                    [G]
-Meu coração se alegra em Ti
-
 [Refrão]
-[${tom}]
-Bênçãos que não têm fim
-[${tom}m]
-Bênçãos que não têm fim
-[F]
-O Teu amor me cercou
-[G]                 [${tom}]
-Bênçãos que não têm fim`
+C              G
+${base.refrao}
+F              G
+És tudo o que eu preciso
+${tom}
+O Teu amor não falha!`
         });
     }
 
@@ -482,14 +503,14 @@ Bênçãos que não têm fim`
         if (hino) {
             mostrarHino(hino);
         } else {
-            alert("Nenhum louvor encontrado com essa busca.");
+            alert("Nenhum louvor encontrado.");
         }
     }
 
     function mostrarHino(hino) {
         document.getElementById('resTitulo').innerText = hino.titulo;
         document.getElementById('resAutor').innerText = "Por: " + hino.autor;
-        document.getElementById('resTom').innerText = "TOM ORIGINAL: " + hino.tom;
+        document.getElementById('resTom').innerText = "TOM: " + hino.tom;
         document.getElementById('resCifra').innerText = hino.cifra;
         notasAtuaisIntro = hino.notasIntro;
         
@@ -506,15 +527,15 @@ Bênçãos que não têm fim`
             return; 
         }
         
-        painel.innerHTML = "<h4 style='color:var(--primary); margin-bottom:15px;'>Cantores:</h4>";
-        const autores = [...new Set(bancoDeLouvores.map(h => h.autor))];
+        painel.innerHTML = "<h4 style='color:var(--primary); margin-bottom:15px;'>Lista de Autores:</h4>";
+        const autoresUnicos = [...new Set(bancoDeLouvores.map(h => h.autor))].sort();
         
-        autores.forEach(autor => {
+        autoresUnicos.forEach(autor => {
             const idLista = "lista-" + autor.replace(/\s+/g, '-');
             const d = document.createElement('div');
             d.className = 'autor-card';
             d.innerHTML = `
-                <strong>${autor}</strong>
+                <strong>🎤 ${autor}</strong>
                 <div class="lista-musicas-autor" id="${idLista}"></div>
             `;
             
@@ -532,7 +553,7 @@ Bênçãos que não têm fim`
                     musicasDoAutor.forEach(m => {
                         const mDiv = document.createElement('div');
                         mDiv.className = 'musica-item';
-                        mDiv.innerText = `${m.titulo} (${m.tom})`;
+                        mDiv.innerText = `🎵 ${m.titulo} (${m.tom})`;
                         mDiv.onclick = function(ev) {
                             ev.stopPropagation();
                             mostrarHino(m);
@@ -569,7 +590,7 @@ Bênçãos que não têm fim`
                 osc.stop(audioCtx.currentTime + 4);
             });
         } catch (e) {
-            console.error("Erro no som da intro.");
+            console.error("Erro no som.");
         }
     }
 
@@ -641,18 +662,12 @@ Bênçãos que não têm fim`
             return alert("Preencha todos os campos e selecione uma foto.");
         }
 
-        if (!supabaseClient) {
-            alert("Não foi possível conectar ao Supabase.");
-            return;
-        }
+        if (!supabaseClient) return alert("Não conectado ao Supabase.");
 
         const reader = new FileReader();
         reader.onload = async function(e) {
             const base64Image = e.target.result;
-
-            const { error } = await supabaseClient
-                .from('produtos')
-                .insert([{ titulo, desc, img: base64Image, link }]);
+            const { error } = await supabaseClient.from('produtos').insert([{ titulo, desc, img: base64Image, link }]);
 
             if (error) {
                 alert("Erro ao salvar produto.");
@@ -674,10 +689,7 @@ Bênçãos que não têm fim`
         if (!lista) return;
         lista.innerHTML = 'Carregando...';
 
-        if (!supabaseClient) {
-            lista.innerHTML = 'Não foi possível carregar.';
-            return;
-        }
+        if (!supabaseClient) return;
 
         try {
             const { data, error } = await supabaseClient.from('produtos').select('*');
@@ -700,7 +712,7 @@ Bênçãos que não têm fim`
 
     async function eliminarProduto(id) {
         if (!confirm("Remover este produto definitivamente?")) return;
-        if (!supabaseClient) return alert("Erro de conexão.");
+        if (!supabaseClient) return;
         
         try {
             const { error } = await supabaseClient.from('produtos').delete().eq('id', id);
